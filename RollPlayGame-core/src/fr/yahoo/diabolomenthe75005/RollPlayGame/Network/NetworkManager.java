@@ -9,6 +9,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 import fr.yahoo.diabolomenthe75005.RollPlayGame.RollPlayGame;
 import fr.yahoo.diabolomenthe75005.RollPlayGame.Player.Player;
+import fr.yahoo.diabolomenthe75005.RollPlayGameServer.MessageServer.MessageServer;
 
 public class NetworkManager {
 	RollPlayGame game = null;
@@ -22,7 +23,7 @@ public class NetworkManager {
 		/* on enregistre les objets ...attention à l'ordre !!!*/
 		Kryo kryo = client.getKryo();
 		kryo.register(Player.class);
-		kryo.register(String.class);
+		kryo.register(MessageServer.class);
 		client.addListener(new Listener() {
 			public void connected (Connection connection) {
 				System.out.println("CLIENT - le joueur est connecté");
@@ -33,8 +34,8 @@ public class NetworkManager {
 					Player response = (Player)object;
 					System.out.println(response.message);
 				}
-				if (object instanceof String) {
-					String response = (String)object;
+				if (object instanceof MessageServer) {
+					String response = ((MessageServer)object).getMessage();
 					System.out.println("String reçu");
 					game.getScreenManager().updateScreen(response);
 				}
@@ -52,7 +53,7 @@ public class NetworkManager {
                     System.out.println("Connected!");
                     client.setKeepAliveTCP(NORM_PRIORITY);
                     while(connected) {
-                        //System.out.println(client.isIdle());
+                        System.out.println(client.isIdle());
                     }
                     client.run();
                 } catch (IOException ex) {
