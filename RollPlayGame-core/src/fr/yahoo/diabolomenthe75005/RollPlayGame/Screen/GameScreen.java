@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import fr.yahoo.diabolomenthe75005.RollPlayGameServer.MessageServer.MessageServer;
+
 public class GameScreen implements Screen {
 	ScreenManager manager = null;
 	Stage stage = null;
@@ -61,8 +63,9 @@ public class GameScreen implements Screen {
 		stage.act(delta);
 		stage.draw();
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-			manager.getGame().getNetworkManager().sendMessage(chatSend.getText());
+		if(Gdx.input.isKeyPressed(Input.Keys.ENTER) && chatSend.getText() != ""){
+			System.out.println("Send");
+			manager.getGame().getNetworkManager().sendMessage(new MessageServer(chatSend.getText()));
 			chatSend.setText("");
 		}
 	}

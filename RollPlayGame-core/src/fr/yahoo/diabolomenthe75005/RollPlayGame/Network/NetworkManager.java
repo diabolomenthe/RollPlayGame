@@ -22,7 +22,6 @@ public class NetworkManager {
 		client.start();
 		/* on enregistre les objets ...attention à l'ordre !!!*/
 		Kryo kryo = client.getKryo();
-		kryo.register(Player.class);
 		kryo.register(MessageServer.class);
 		client.addListener(new Listener() {
 			public void connected (Connection connection) {
@@ -30,6 +29,7 @@ public class NetworkManager {
 				connected = true;
 			}
 			public void received (Connection connection, Object object){
+				System.out.println("Objbjet reçu");
 				if (object instanceof Player) {
 					Player response = (Player)object;
 					System.out.println(response.message);
@@ -41,30 +41,42 @@ public class NetworkManager {
 				}
 
 			}
+			public void disconnected(Connection connection){
+				System.out.println("Disconnected");
+			}
 
 		});
 	}
-	
+
 	public boolean connectToServer(final String ip,final int port){
-		new Thread("Connect"){
-            public void run () {
-                try {
-                    client.connect(5000, ip, port);
-                    System.out.println("Connected!");
-                    client.setKeepAliveTCP(NORM_PRIORITY);
-                    while(connected) {
-                        System.out.println(client.isIdle());
-                    }
-                    client.run();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }.start();
+		try{
+			client.connect(20000, ip, port,port+1);
+			System.out.println("Connected!");
+			client.setKeepAliveTCP(Thread.NORM_PRIORITY);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+
 		return false;
 	}
 
 	public void sendMessage(String text) {
 		client.sendTCP(text);
 	}
+
+	public void sendMessage(MessageServer messageServer) {
+		// TODO Auto-generated method stub
+		if(!client.isConnected()){
+			try {
+				client.reconnect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		client.sendTCP(messageServer);
+
+	}
+
 }

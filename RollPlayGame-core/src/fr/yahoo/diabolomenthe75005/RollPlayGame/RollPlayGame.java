@@ -8,7 +8,6 @@ import fr.yahoo.diabolomenthe75005.RollPlayGame.Screen.ScreenManager;
 public class RollPlayGame extends Game {
 	ScreenManager screenManager = null;
 	NetworkManager networkManager = null;
-	Client client = null;
 	
 	@Override
 	public void create () {
@@ -27,7 +26,7 @@ public class RollPlayGame extends Game {
 		return screenManager;
 	}
 	
-	public final NetworkManager getNetworkManager() {
+	public NetworkManager getNetworkManager() {
 		return networkManager;
 	}
 }
