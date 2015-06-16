@@ -32,7 +32,9 @@ public class JoinScreen implements Screen {
 		send.addListener(new ClickListener(){
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
-	        	manager.getGame().getNetworkManager().connectToServer(ipaddress.getText(),Integer.parseInt(port.getText()) );
+	        	manager.getGame().getNetworkManager().setIp(ipaddress.getText());
+	        	manager.getGame().getNetworkManager().setPort(Integer.parseInt(port.getText()));
+	        	manager.getGame().getNetworkManager().connect();
 	        	manager.setScreen("game");
 	        }
 	    });

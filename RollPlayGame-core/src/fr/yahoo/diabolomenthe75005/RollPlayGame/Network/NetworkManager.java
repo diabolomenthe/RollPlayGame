@@ -8,35 +8,28 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 import fr.yahoo.diabolomenthe75005.RollPlayGame.RollPlayGame;
+import fr.yahoo.diabolomenthe75005.RollPlayGame.MessageServer.MessageServer;
 import fr.yahoo.diabolomenthe75005.RollPlayGame.Player.Player;
-import fr.yahoo.diabolomenthe75005.RollPlayGameServer.MessageServer.MessageServer;
 
-public class NetworkManager {
-	RollPlayGame game = null;
-	Client client = null;
-	Boolean connected = false;
+public class NetworkManager extends Client{
+	private RollPlayGame game = null;
+	private String ip = "";
+	private int port = 0;
 
 	public NetworkManager(RollPlayGame g) {
+		super();
 		this.game = g;
-		client = new Client();
-		client.start();
+
 		/* on enregistre les objets ...attention à l'ordre !!!*/
-		Kryo kryo = client.getKryo();
+		Kryo kryo = this.getKryo();
 		kryo.register(MessageServer.class);
-		client.addListener(new Listener() {
+		this.addListener(new Listener() {
 			public void connected (Connection connection) {
 				System.out.println("CLIENT - le joueur est connecté");
-				connected = true;
 			}
 			public void received (Connection connection, Object object){
-				System.out.println("Objbjet reçu");
-				if (object instanceof Player) {
-					Player response = (Player)object;
-					System.out.println(response.message);
-				}
 				if (object instanceof MessageServer) {
 					String response = ((MessageServer)object).getMessage();
-					System.out.println("String reçu");
 					game.getScreenManager().updateScreen(response);
 				}
 
@@ -46,13 +39,13 @@ public class NetworkManager {
 			}
 
 		});
+		
 	}
 
-	public boolean connectToServer(final String ip,final int port){
+	public boolean connect(){
 		try{
-			client.connect(20000, ip, port,port+1);
+			this.connect(20000, ip, port,port+1);
 			System.out.println("Connected!");
-			client.setKeepAliveTCP(Thread.NORM_PRIORITY);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -61,22 +54,33 @@ public class NetworkManager {
 		return false;
 	}
 
-	public void sendMessage(String text) {
-		client.sendTCP(text);
-	}
-
-	public void sendMessage(MessageServer messageServer) {
+	public void send(Object object) {
 		// TODO Auto-generated method stub
-		if(!client.isConnected()){
+		if(!this.isConnected()){
 			try {
-				client.reconnect();
+				this.reconnect();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		client.sendTCP(messageServer);
+		this.sendTCP(object);
+	}
 
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 }

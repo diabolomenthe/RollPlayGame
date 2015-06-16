@@ -1,4 +1,4 @@
-package fr.yahoo.diabolomenthe75005.RollPlayGameServer.MessageServer;
+package fr.yahoo.diabolomenthe75005.RollPlayGame.MessageServer;
 
 public class MessageServer {
 	private String message = "";
