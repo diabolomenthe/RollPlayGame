@@ -2,6 +2,7 @@ package fr.yahoo.diabolomenthe75005.RollPlayGame.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,34 +15,46 @@ public class CreateGameScreen implements Screen {
 	Stage stage = null;
 	Skin skin = null;
 
-	public CreateGameScreen(ScreenManager manager,Skin skin){
+	public CreateGameScreen(final ScreenManager manager,Skin skin){
 		this.manager = manager;
 		this.skin = skin;
 		
 		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+		
 
 		Table table = new Table();
-		TextButton hostGame=new TextButton("Joueurs",skin);
-		hostGame.addListener(new ClickListener(){
+		TextButton joueurs=new TextButton("Joueurs",skin);
+		joueurs.addListener(new ClickListener(){
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
-	            //game.setScreen();
+	            manager.setScreen("joueurs");
 	        }
 	    });
 		
-		TextButton joinGame=new TextButton("Cartes",skin);
-		TextButton QuitGame=new TextButton("Retour",skin);
+		TextButton cartes=new TextButton("Cartes",skin);
+		cartes.addListener(new ClickListener(){
+	        @Override
+	        public void clicked(InputEvent event, float x, float y) {
+	            manager.setScreen("cartes");
+	        }
+	    });
+		TextButton retour=new TextButton("Retour",skin);
+		retour.addListener(new ClickListener(){
+	        @Override
+	        public void clicked(InputEvent event, float x, float y) {
+	            manager.setScreen("main");
+	        }
+	    });
 		
 		table.setWidth(200f);
 		table.setHeight(20f);
 		table.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - 3*10f);
 		
-		table.add(hostGame).width(200f).height(20f);
+		table.add(joueurs).width(200f).height(20f);
 		table.row();
-		table.add(joinGame).width(200f).height(20f);
+		table.add(cartes).width(200f).height(20f);
 		table.row();
-		table.add(QuitGame).width(200f).height(20f);
+		table.add(retour).width(200f).height(20f);
 		table.row();
 		
 		table.setWidth(200f);
@@ -49,6 +62,8 @@ public class CreateGameScreen implements Screen {
 		table.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - 3*10f);
 		
 		stage.addActor(table);
+		
+		Gdx.input.setInputProcessor(stage);
 
 	}
 
@@ -60,7 +75,9 @@ public class CreateGameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 		stage.act(delta);
 		stage.draw();
 		//stage.setViewport(800,480,false);

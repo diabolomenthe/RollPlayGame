@@ -1,4 +1,4 @@
-package fr.yahoo.diabolomenthe75005.RollPlayGame.Player;
+package fr.yahoo.diabolomenthe75005.RollPlayGame.Model;
 
 public class Player {
 	public String message = "Bienvenue sur le serveur" ;

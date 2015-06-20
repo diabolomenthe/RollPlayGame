@@ -2,6 +2,7 @@ package fr.yahoo.diabolomenthe75005.RollPlayGame.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,9 +20,18 @@ public class MainMenuScreen implements Screen {
 		this.skin = skin;
 		
 		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+		
 
 		Table table = new Table();
+		
+		TextButton create=new TextButton("Creer/Modifier Jeu",skin);
+		create.addListener(new ClickListener(){
+	        @Override
+	        public void clicked(InputEvent event, float x, float y) {
+	            manager.setScreen("create");
+	        }
+	    });
+		
 		TextButton hostGame=new TextButton("Accueillir",skin);
 		hostGame.addListener(new ClickListener(){
 	        @Override
@@ -39,11 +49,19 @@ public class MainMenuScreen implements Screen {
 	    });
 		
 		TextButton QuitGame=new TextButton("Quitter",skin);
+		QuitGame.addListener(new ClickListener(){
+	        @Override
+	        public void clicked(InputEvent event, float x, float y) {
+	            Gdx.app.exit();
+	        }
+	    });
 		
 		table.setWidth(200f);
 		table.setHeight(20f);
 		table.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - 3*10f);
 		
+		table.add(create).width(200f).height(20f);
+		table.row();
 		table.add(hostGame).width(200f).height(20f);
 		table.row();
 		table.add(joinGame).width(200f).height(20f);
@@ -52,10 +70,12 @@ public class MainMenuScreen implements Screen {
 		table.row();
 		
 		table.setWidth(200f);
-		table.setHeight(60f);
+		table.setHeight(80f);
 		table.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - 3*10f);
 		
 		stage.addActor(table);
+		
+		Gdx.input.setInputProcessor(stage);
 
 	}
 
@@ -67,7 +87,9 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 		stage.act(delta);
 		stage.draw();
 		//stage.setViewport(800,480,false);

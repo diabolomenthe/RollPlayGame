@@ -9,7 +9,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 import fr.yahoo.diabolomenthe75005.RollPlayGame.RollPlayGame;
 import fr.yahoo.diabolomenthe75005.RollPlayGame.MessageServer.MessageServer;
-import fr.yahoo.diabolomenthe75005.RollPlayGame.Player.Player;
+import fr.yahoo.diabolomenthe75005.RollPlayGame.Model.Player;
 
 public class NetworkManager extends Client{
 	private RollPlayGame game = null;

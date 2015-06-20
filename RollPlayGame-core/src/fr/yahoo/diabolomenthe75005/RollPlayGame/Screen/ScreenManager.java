@@ -19,14 +19,18 @@ public class ScreenManager {
 		switch (menuCall) {
 		case "host": game.setScreen(new HostScreen(this,skin));
 		break;
+		case "create": game.setScreen( new CreateGameScreen(this,skin));
+		break;
 		case "join": game.setScreen(new JoinScreen(this,skin));
 		break;
 		case "game": game.setScreen(new GameScreen(this,skin));
 		break;
+		case "cartes": game.setScreen(new CartesScreen(this,skin));
+		break;
 		default: game.setScreen(new MainMenuScreen(this,skin));
 		}
 	}
-	
+
 	public final RollPlayGame getGame(){
 		return game;
 	}
@@ -37,5 +41,5 @@ public class ScreenManager {
 			((GameScreen) game.getScreen()).getchatRec().setText(response);
 		}
 	}
-	
+
 }
