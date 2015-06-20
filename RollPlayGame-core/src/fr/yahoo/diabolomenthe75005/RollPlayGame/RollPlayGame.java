@@ -1,24 +1,15 @@
 package fr.yahoo.diabolomenthe75005.RollPlayGame;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
-
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
-import com.esotericsoftware.kryonet.Client;
 
-import fr.yahoo.diabolomenthe75005.RollPlayGame.MessageServer.MessageServer;
+import fr.yahoo.diabolomenthe75005.RollPlayGame.Database.DatabaseManager;
 import fr.yahoo.diabolomenthe75005.RollPlayGame.Network.NetworkManager;
-import fr.yahoo.diabolomenthe75005.RollPlayGame.Screen.GameScreen;
 import fr.yahoo.diabolomenthe75005.RollPlayGame.Screen.ScreenManager;
 
 public class RollPlayGame extends Game {
 	private ScreenManager screenManager = null;
 	private NetworkManager networkManager = null;
+	private DatabaseManager databaseManager = null;
 	public boolean connected = false;
 	
 	@Override
@@ -26,6 +17,7 @@ public class RollPlayGame extends Game {
 		//Lance le screen manager
 		screenManager = new ScreenManager(this);
 		networkManager = new NetworkManager(this);
+		databaseManager = new DatabaseManager();
 		new Thread(networkManager).start();
 		
 

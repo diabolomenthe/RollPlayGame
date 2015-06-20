@@ -1,9 +1,14 @@
-package fr.yahoo.diabolomenthe75005.RollPlayGame.Model;
+package fr.yahoo.diabolomenthe75005.RollPlayGame.Database;
+
+import java.io.Serializable;
 
 import com.badlogic.gdx.utils.Array;
 
-
-public class Map {
+public class Map implements Serializable, DbTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2459433561802170900L;
 	private String projectname;
 	private int heighttiles;
 	private int widthtiles;
@@ -39,5 +44,25 @@ public class Map {
 	}
 	public void setTilesetname(Array<String> tilesetname) {
 		this.tilesetname = tilesetname;
+	}
+	@Override
+	public boolean createTable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean updateTable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean deleteTable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean insertTable() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
